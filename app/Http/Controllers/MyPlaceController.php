@@ -11,13 +11,4 @@ class MyPlaceController extends Controller
         return 'Ну привет ))';
     }
 
-    public function second()
-    {
-        return 'Опаньки! Вторая страница';
-    }
-
-    public function app18()
-    {
-        return 'Страница с номером';
-    }
 }
