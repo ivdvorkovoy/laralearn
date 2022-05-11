@@ -17,6 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/my_page', function () {
-   return 'Ну привет ))';
-});
+Route::get('/my_page', 'MyPlaceController@index');
