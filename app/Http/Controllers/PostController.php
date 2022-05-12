@@ -56,4 +56,34 @@ class PostController extends Controller
         $post->restore();
         $post->delete();
     }
+
+    public function firstOrCreate()
+    {
+        $anotherPost = [
+            'title' => 'Мой какой-то заголовок 1 поста',
+            'content' => 'Тут какой-то контент поста',
+            'image' => 'картинка.jpg',
+            'likes' => '15',
+            'is_published' => '1',
+        ];
+
+        $post = Post::firstOrCreate([
+            'title' => 'Мой заголовок 1 поста'
+        ],$anotherPost);
+    }
+
+    public function updateOrCreate()
+    {
+        $anotherPost = [
+            'title' => 'Мой какой-то обновлённый заголовок 1 поста',
+            'content' => 'Тут какой-то контент поста',
+            'image' => 'картинка.jpg',
+            'likes' => '15',
+            'is_published' => '1',
+        ];
+
+        $post = Post::updateOrCreate([
+            'title' => 'Мой какой-то заголовок 1 поста'
+        ],$anotherPost);
+    }
 }
