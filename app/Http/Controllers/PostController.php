@@ -8,11 +8,35 @@ class PostController extends Controller
 {
     public function index()
     {
-        // Поиск по Id в таблице posts
-        $post = Post::find(1);
+        $posts = Post::where('is_published', 1)->get();
+        foreach ($posts as $post) {
+            dump($post->title);
+        }
+    }
 
-        //Дамп без остановки выполнения
-        dump($post);
+    public function create()
+    {
+        $postArr = [
+            [
+                'title' => 'Мой заголовок 1 поста',
+                'content' => 'Тут контент поста',
+                'image' => 'картинка.jpg',
+                'likes' => '15',
+                'is_published' => '1',
+            ],
+            [
+                'title' => 'Мой заголовок 2 поста',
+                'content' => 'Тут контент поста',
+                'image' => 'картинка.jpg',
+                'likes' => '21',
+                'is_published' => '1',
+            ]
+        ];
+
+        foreach ($postArr as $post) {
+            Post::create($post);
+        }
+
     }
 
 }

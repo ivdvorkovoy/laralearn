@@ -11,4 +11,7 @@ class Post extends Model
 
     // Явное указание таблицы
     protected $table = 'posts';
+
+    // В массиве объявляются поля, в которые нельзя добавлять
+    protected $guarded = [];
 }
