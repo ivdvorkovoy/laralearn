@@ -14,6 +14,7 @@ class PostController extends Controller
         }
     }
 
+    // Создание записи в базе
     public function create()
     {
         $postArr = [
@@ -36,7 +37,23 @@ class PostController extends Controller
         foreach ($postArr as $post) {
             Post::create($post);
         }
-
     }
 
+    // Обновление записи в базе
+    public function update()
+    {
+        $post = Post::find(3);
+
+        $post->update([
+            'title' => 'Мой обновлённый заголовок поста'
+        ]);
+    }
+
+    // Удаление записи из базы
+    public function delete()
+    {
+        $post = Post::withTrashed()->find(1);
+        $post->restore();
+        $post->delete();
+    }
 }
