@@ -10,50 +10,56 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-        return view('posts', compact('posts'));
+        return view('post.index', compact('posts'));
     }
 
-    // Создание записи в базе
     public function create()
     {
-        $postArr = [
-            [
-                'title' => 'Мой заголовок 1 поста',
-                'content' => 'Тут контент поста',
-                'image' => 'картинка.jpg',
-                'likes' => '15',
-                'is_published' => '1',
-            ],
-            [
-                'title' => 'Мой заголовок 2 поста',
-                'content' => 'Тут контент поста',
-                'image' => 'картинка.jpg',
-                'likes' => '21',
-                'is_published' => '1',
-            ]
-        ];
-
-        foreach ($postArr as $post) {
-            Post::create($post);
-        }
+        return view('post.create');
     }
 
-    // Обновление записи в базе
-    public function update()
+    public function store()
     {
-        $post = Post::find(3);
-
-        $post->update([
-            'title' => 'Мой обновлённый заголовок поста'
+        $data = request()->validate([
+            'title' => 'string',
+            'content' => 'string',
+            'image' => 'string',
+            'likes' => 'integer'
         ]);
+
+        Post::create($data);
+
+        return redirect()->route('post.index');
     }
 
-    // Удаление записи из базы
-    public function delete()
+    public function show(Post $post)
     {
-        $post = Post::withTrashed()->find(1);
-        $post->restore();
+        return view('post.show', compact('post'));
+    }
+
+    public function edit(Post $post)
+    {
+        return view('post.edit', compact('post'));
+    }
+
+    public function update(Post $post)
+    {
+        $data = request()->validate([
+            'title' => 'string',
+            'content' => 'string',
+            'image' => 'string',
+            'likes' => 'integer'
+        ]);
+
+        $post->update($data);
+
+        return redirect()->route('post.show', $post->id);
+    }
+
+    public function destroy(Post $post)
+    {
         $post->delete();
+        return redirect()->route('post.index');
     }
 
     public function firstOrCreate()
