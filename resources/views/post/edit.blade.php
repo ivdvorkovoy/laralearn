@@ -34,6 +34,18 @@
                 @endforeach
             </select>
         </div>
+        <div class="mb-3">
+            <label for="tags" class="form-label">Теги</label>
+            <select class="form-select" multiple aria-label="multiple select example" id="tags" name="tags[]">
+                @foreach($tags as $tag)
+                    <option
+                        @foreach($post->tags as $postTag)
+                            {{ $tag->id == $postTag->id ? 'selected' : '' }}
+                        @endforeach
+                        value="{{ $tag->id }}">{{ $tag->title }}</option>
+                @endforeach
+            </select>
+        </div>
         <a class="btn btn-primary" href="{{ route('post.show', $post->id) }}">Назад</a>
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>

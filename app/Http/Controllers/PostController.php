@@ -53,7 +53,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('post.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('post.edit', compact('post', 'categories', 'tags'));
     }
 
     public function update(Post $post)
@@ -63,10 +64,17 @@ class PostController extends Controller
             'content' => 'string',
             'image' => 'string',
             'likes' => 'integer',
-            'category_id' => 'integer'
+            'category_id' => 'integer',
+            'tags' => ''
         ]);
 
+        $tags = $data['tags'];
+        unset($data['tags']);
+
         $post->update($data);
+        $post = $post->fresh();
+
+        $post->tags()->sync($tags);
 
         return redirect()->route('post.show', $post->id);
     }
