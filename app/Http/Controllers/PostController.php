@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\PostTag;
 use App\Models\Tag;
 
 class PostController extends Controller
 {
     public function index()
     {
-//        $posts = Post::all();
+        $posts = Post::all();
 
-        $post = Post::find(1);
-
-        $tag = Tag::find(1);
-
-//        dd($post->tags);
-        dd($tag->posts);
-
-//        return view('post.index', compact('posts'));
+        return view('post.index', compact('posts'));
     }
 
     public function create()
     {
-        return view('post.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('post.create', compact('categories', 'tags'));
     }
 
     public function store()
@@ -32,10 +29,23 @@ class PostController extends Controller
             'title' => 'string',
             'content' => 'string',
             'image' => 'string',
-            'likes' => 'integer'
+            'likes' => 'integer',
+            'category_id' => 'integer',
+            'tags' => ''
+
         ]);
 
-        Post::create($data);
+        $tags = $data['tags'];
+        unset($data['tags']);
+
+        $post = Post::create($data);
+
+        foreach ($tags as $tag) {
+            PostTag::firstOrCreate([
+                'tag_id' => $tag,
+                'post_id' => $post->id
+            ]);
+        }
 
         return redirect()->route('post.index');
     }
@@ -47,7 +57,8 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('post.edit', compact('post'));
+        $categories = Category::all();
+        return view('post.edit', compact('post', 'categories'));
     }
 
     public function update(Post $post)
@@ -56,7 +67,8 @@ class PostController extends Controller
             'title' => 'string',
             'content' => 'string',
             'image' => 'string',
-            'likes' => 'integer'
+            'likes' => 'integer',
+            'category_id' => 'integer'
         ]);
 
         $post->update($data);

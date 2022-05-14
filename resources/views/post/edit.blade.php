@@ -24,6 +24,16 @@
             <input type="number" class="form-control" id="likes" name="likes" value="{{ $post->likes }}">
             <div id="likesHelp" class="form-text">какое-то описание поля</div>
         </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Категория</label>
+            <select class="form-select" aria-label="Default select example" id="category" name="category_id">
+                @foreach($categories as $category)
+                    <option
+                        {{ $category->id == $post->category->id ? 'selected' : '' }}
+                        value="{{ $category->id }}">{{ $category->title }}</option>
+                @endforeach
+            </select>
+        </div>
         <a class="btn btn-primary" href="{{ route('post.show', $post->id) }}">Назад</a>
         <button type="submit" class="btn btn-primary">Сохранить</button>
     </form>
