@@ -40,12 +40,7 @@ class PostController extends Controller
 
         $post = Post::create($data);
 
-        foreach ($tags as $tag) {
-            PostTag::firstOrCreate([
-                'tag_id' => $tag,
-                'post_id' => $post->id
-            ]);
-        }
+        $post->tags()->attach($tags);
 
         return redirect()->route('post.index');
     }
