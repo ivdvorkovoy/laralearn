@@ -26,7 +26,7 @@
         </tbody>
     </table>
 
-    {{ $posts->links() }}
+    {{ $posts->withQueryString()->links() }}
 
 
 @endsection

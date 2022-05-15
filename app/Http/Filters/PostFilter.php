@@ -15,7 +15,7 @@ class PostFilter extends AbstractFilter
         return [
             self::TITLE => [$this, 'title'],
             self::CONTENT => [$this, 'content'],
-            self::CATEGORY_ID => [$this, 'categoryId'],
+            self::CATEGORY_ID => [$this, 'categoryId']
         ];
     }
 
