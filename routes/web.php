@@ -30,6 +30,12 @@ Route::group(['namespace' => 'Post'], function () {
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::group(['namespace' => 'Post'], function () {
         Route::get('/post', 'IndexController')->name('admin.post.index');
+        Route::get('/post/create', 'CreateController')->name('admin.post.create');
+        Route::post('/post', 'StoreController')->name('admin.post.store');
+        Route::get('/post/{post}', 'ShowController')->name('admin.post.show');
+        Route::get('/post/{post}/edit', 'EditController')->name('admin.post.edit');
+        Route::patch('/post/{post}', 'UpdateController')->name('admin.post.update');
+        Route::delete('/post/{post}', 'DestroyController')->name('admin.post.destroy');
     });
 });
 
